@@ -1,0 +1,75 @@
+﻿@model Learn_Upload.Models.ViewModels.ContactFormSelectListViewModel
+
+@{
+    ViewBag.Title = "ContactForm";
+}
+
+<h2>ContactForm</h2>
+
+@if(TempData["Message"] != null)
+{
+<div class="alert alert-success" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    @TempData["Message"]
+</div>
+}
+@using (Html.BeginForm("ContactForm","Home",FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>ContactFormSelectListViewModel</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(Model => Model.contactForm.Subject, htmlAttributes: new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(Model => Model.contactForm.Subject, Model.selectItems, htmlAttributes: new { @class = "form-control" }, optionLabel: GlobalRes.OptionLabel)
+            @Html.ValidationMessageFor(Model => Model.contactForm.Subject, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(Model => Model.contactForm.Name, htmlAttributes: new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(Model => Model.contactForm.Name, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(Model => Model.contactForm.Name, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(Model => Model.contactForm.Email, htmlAttributes: new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(Model => Model.contactForm.Email, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(Model => Model.contactForm.Email, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(Model => Model.contactForm.Question, htmlAttributes: new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(Model => Model.contactForm.Question, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(Model => Model.contactForm.Question, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(Model => Model.contactForm.Attachment, htmlAttributes: new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(Model=>Model.contactForm.Attachment, new { type = "file" })
+            @Html.ValidationMessageFor(Model=>Model.contactForm.Attachment, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
